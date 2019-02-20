@@ -1,0 +1,30 @@
+;8.	Escriba una función que determine la Media de una lista de números
+
+;Antes de empezar hay que aclarar que la media es la suma de los elementos de un conjunto dividido por la cant. de elementos
+;Es lo que nosotros conocemos mas como promedio
+
+;Funcion para definir la cantidad de elementos
+
+(defun cantidad (lista)
+    (cond 
+        ((and (listp lista) t) (length lista))
+    )
+)
+
+;Funcion para definir la sumatoria de los elementos
+
+(defun total (lista)
+    (cond
+        ((null lista) 0)
+         ((not (null lista)) (+ (first lista) (total (rest lista))))
+    )
+)
+
+;Funcion para calcular la media
+
+(defun media (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (/ (total lista) (cantidad lista)))
+    )
+)
