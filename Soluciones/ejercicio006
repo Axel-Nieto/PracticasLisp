@@ -1,0 +1,14 @@
+;6.	Realice un programa que calcule la sumatoria de las tres primeras potencias (es decir el número, el número al cuadrado y al cubo) de un número dado.
+
+(defun potencia (x n)
+    (cond
+        ((and (= x 0) (= n 0)) nil)
+        ((and (= x 0) (/= n 0)) 0)
+        ((and (/= x 0) (= n 0)) 1)
+        ((and (/= x 0) (>= n 1)) (* x (potencia x (- n 1))))
+    )
+)
+
+(defun trespotencias (x)
+    (+ (potencia x 1) (potencia x 2) (potencia x 3))
+)
