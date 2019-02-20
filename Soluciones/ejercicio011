@@ -1,0 +1,12 @@
+;11.	Escriba una función llamada “existe” que indique si un objeto se encuentra dentro de una lista determinada
+
+;el operador eq sirve para evaluar si dos objetos son similares, por lo tanto un 3(numero) y un 3(char) no seran equivalentes
+;NOTA: no confundir eq con equalp, equal o =
+
+(defun existe (lista objeto)
+    (cond
+        ((null lista) nil)
+        ((eq (first lista) objeto) t)
+        ((not(eq (first lista) objeto)) (existe (rest lista) objeto))
+    )
+)
