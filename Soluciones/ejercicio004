@@ -1,0 +1,8 @@
+;4.	Defina una función que determine el valor absoluto de un número
+
+(defun absolute (x)
+    (cond
+        ((>= x 0) x)
+        ((< x 0) (* -1 x))
+    )
+)
