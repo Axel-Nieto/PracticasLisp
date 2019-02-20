@@ -1,0 +1,7 @@
+;7.	Escriba una función llamada “Cantidad” que devuelva la cantidad de elementos de una lista
+
+(defun cantidad (lista)
+    (cond 
+        ((and (listp lista) t) (length lista))
+    )
+)
