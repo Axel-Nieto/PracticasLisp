@@ -1,0 +1,10 @@
+;10.	Realice una función que devuelva el i-ésimo elemento de una lista
+;el funcionamiento de este ejercicio es similar al ejercicio009, consultarlo para ver los comentarios
+
+(defun devolveri (lista i)
+    (cond
+        ((null lista) nil)
+        ((= i 0) (first lista))
+        ((> i 0) (devolveri (rest lista) (- i 1)))
+    )
+)
