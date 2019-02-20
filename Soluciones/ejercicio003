@@ -1,0 +1,10 @@
+;3.	Defina una función que calcule la enésima potencia de un número
+
+(defun npot (x n)
+    (cond
+        ((and (= x 0) (/= n 0)) 0)
+        ((and (= x 0) (= n 0)) nil)
+        ((= n 0) 1)
+        ((>= n 1) (* x (npot x (- n 1))))
+    )
+)
