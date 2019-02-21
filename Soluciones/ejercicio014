@@ -1,0 +1,7 @@
+(defun eliminarelemento (lista elemento)
+    (cond
+        ((null lista) nil)
+        ((and (not (null lista)) (not (eq elemento (first lista)))) (cons (first lista) (eliminarelemento (rest lista) elemento)))
+        ((and (not (null lista)) (eq elemento (first lista))) (eliminarelemento (rest lista) elemento))
+    )
+)
