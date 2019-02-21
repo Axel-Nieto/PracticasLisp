@@ -1,0 +1,10 @@
+;Agregue un elemento a una lista en una posición dada
+
+(defun agregar (lista elem i)
+	(cond
+		((and (null lista) (= i 0)) (cons elem (rest lista)))
+		((and (null lista) (> i 0)) nil)
+		((and (not (null lista)) (= i 0)) (cons elem lista))
+		((and (not (null lista)) (> i 0)) (cons (first lista) (agregar (rest lista) elem (- i 1))))
+	)
+)
