@@ -1,0 +1,58 @@
+;Escriba una función que calcule los n primeros números primos y los devuelva en una lista.
+
+;definimos numero primo como aquel entero que es divisible por si mismo (o su opuesto) y el 1 (o el -1)
+
+;ej: 7 solo es divisible por 7,-7,1 y -1, por lo tanto es primo
+
+;NOTA: el siguiente programa podria no ser el metodo mas optimo, solo aseguramos que cumple su funcion
+
+;esta funcion va a evaluar si un numero es primo o no.
+;Descartamos meter como parametros los numeros enteros negativos debido a que si un entero es primo, su negativo tambien lo es
+;El 1 tampoco es un primo, pues debe ser tener dos divisores (el mismo y el 1), y solo posee un divisor aunque cumpla con ambas cuestiones
+;evaluarprimo esta pensado para insertar como parametro un numero x, a su vez y sera su menor inmediato (x-1), debido a que no es necesario
+;evaluar si un numero es divisor de si mismo
+;si un numero x es divisible por un numero menor a el (excepto 1), automaticamente deja de ser primo y devuelve falso
+;si x no es divisible por un numero y en un momento dado, se repetira la operacion de evaluarprimo sustituyendo y por su menor inmediato,
+;cuando y llegue a 1 significa que no encontro divisor, por lo tanto es primo y devuelve verdadero
+
+(defun evaluarprimo (x y)
+    (cond
+        ((<= x 0) nil)
+        ((= x 1) nil)
+        ((and (/= y 1)(and (/= x y) (= (mod x y) 0))) nil)
+        ((and (/= y 1)(and (/= x y) (/= (mod x y) 0))) (evaluarprimo x (- y 1)))
+        ((and (= y 1) (/= x y)) t)
+    )
+)
+
+;Como me gusta dividir el problema en partes, en lugar de hacer toda la evaluacion en evaluarprimo, tambien agrego la funcion esprimo,
+;la cual tiene la ventaja de solo pasarle un parametro, que es el numero a evaluar.
+;Si el numero es positivo o cero, ejecutara evaluarprimo normalmente tomando el numero y su menor inmediato, pero si es negativo ejecutara
+;evaluar primo de su opuesto y el menor inmediato de este, porque como ya se dijo, si un numero es primo, su opuesto tambien lo es.
+
+(defun esprimo (x)
+    (cond
+        ((< x 0) (evaluarprimo (* x -1) (- (* x -1) 1)))
+        ((>= x 0) (evaluarprimo x (- x 1)))
+    )
+)
+
+;El siguien paso es crear un metodo para devolver la lista con los primeros n numeros primos. Como se puede ver, ya anticipamos que devolvera nil
+;si n es igual o menor a 0. i sera nuestro numero de partida. Si n es positivo y la variable i es un numero primo, se creara una lista con i como
+;primer elemento y el resto de la lista sera una llamada recursiva de la misma funcion, decrementando en uno la cantidad de primos a encontrar e
+;incrementando i para buscar el siguiente primo. De forma analoga si n es positivo pero i no es primo, se hace llamada a la misma funcion (sin crear
+; lista), incrementando solamente i, para evaluar el siguiente numero.
+;NOTA: con este metodo el ejercicio estaria completo y permite evaluar los primeros n numero partiendo incluso desde un numero negativo, pero voy a
+;dejar al final una funcion que calcule los n primos solo a partir del 0, para el que no quiera especificar un punto de partida.
+
+(defun nprimos (n i)
+    (cond
+        ((<= n 0) nil)
+        ((and (> n 0) (esprimo i)) (cons i (nprimos (- n 1) (+ i 1))))
+        ((and (> n 0) (not (esprimo i))) (nprimos n (+ i 1)))
+    )
+)
+
+(defun prognprimos (n)
+    (nprimos n 0)
+)
