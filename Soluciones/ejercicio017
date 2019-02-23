@@ -1,0 +1,28 @@
+;Escriba una función que calcule la Moda de una lista de números (el número que más se repite)
+
+(defun contar (lista elem cant)
+        (cond
+            ((null lista) (+ cant 0))
+            ((= (first lista) elem) (contar (rest lista) elem (+ cant 1)))
+            ((/= (first lista) elem) (contar (rest lista) elem cant))
+        )
+)
+
+(defun moda (lista max cant)
+    (cond
+        ((null lista) (cons max cant))
+        (
+         (>= (contar lista (first lista) 0) cant) 
+            (moda (rest lista) (first lista) (contar lista (first lista) 0))
+        )
+        
+        (
+         (< (contar lista (first lista) 0) cant)             
+            (moda (rest lista) max cant)
+        )
+    )
+)
+
+(defun programa (lista)
+    (moda lista 0 0)
+)
