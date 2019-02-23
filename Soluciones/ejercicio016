@@ -1,0 +1,70 @@
+;Escriba una función que determine la Varianza de una lista de números Varianza = (Sumatoria (Xi - Media)^2) / (n - 1) siendo Xi cada uno de los n elementos de la lista
+
+;primero la funcion sumatoria de una lista
+
+(defun sumatoria (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (+ (first lista) (sumatoria (rest lista))))
+    )
+)
+
+;luego la funcion para calcular n, que es la cantidad total de elementos de la lista
+
+(defun cantidad (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (+ 1 (cantidad (rest lista))))
+    )
+)
+
+;ahora el calculo de la media
+
+(defun media (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (/ (sumatoria lista) (cantidad lista)))
+    )
+)
+
+;funcion cuadrado
+
+(defun cuadrado (x) (* x x))
+
+;vamos a definir a (Xi - media)^2 como una unica funcion llamada 'xmedia'
+
+(defun xmedia (xi lista)
+    (cuadrado (- xi (media lista)))
+)
+
+;ahora vamos a definir las funcion de obtener una lista con todas las xmedias. Lista es la lista original, y lres es la lista original,
+;la cual vamos a recorrer para obtener los primeros, pues la original debe estar intacta
+
+(defun xmedias (lista lres)
+    (cond
+        ((null lista) nil)
+        ((null lres) nil)
+        ((not (null lista)) (cons (xmedia (first lres) lista) (xmedias lista (rest lres))))
+    )
+)
+
+;obtendremos el numerador aplicando la sumatoria de las xmedias, la llamaremos 'numerador'
+
+(defun numerador (lista)
+    (sumatoria (xmedias lista lista))
+)
+
+;obtendremos ahora el denominador
+
+(defun denominador (lista)
+    (cantidad lista)
+)
+
+;ahora si, el programa final. Tener en cuenta que si es una lista sin elementos o con solo un elemento, no tiene sentido calcular
+;una varianza porque esta no existe, por lo tanto devolveremos nil
+(defun programa (lista)
+    (cond
+        ((<= (cantidad lista) 1) nil)
+        ((> (cantidad lista) 1) (/ (numerador lista) (denominador lista)))
+    )
+)
