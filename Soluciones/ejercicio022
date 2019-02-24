@@ -1,0 +1,27 @@
+;Escriba una función llamada "Cantidad-de" que toma como argumentos una lista y una condición (función), y devuelve la cantidad de elementos de la lista ;que cumplen con dicha condición.
+
+;funcion de ejemplo
+(defun mayortres (elemento)
+    (cond
+        ((> elemento 3) t)
+    )
+)
+
+;vamos a usar una keyword llamada funcall, la cual nos permite pasarle un string seguido de todos los argumentos que va a usar
+;la gracia de esto es que podamos usar la funcion cantidad-de con varias condiciones que requieran los mismo atributos
+
+;ej: yo puedo escribir otras dos funciones, llamadas mayorcuatro y mayorcinco que sean similares a mayortres y aplicarla a
+;cantidad-de sin necesidad de modificar nada, solo cambiar el nombre de la condicion
+
+(defun Cantidad-de (lista condicion)
+    (cond
+        ((null lista) 0)
+        ((and (funcall condicion (first lista)) t) (+ 1 (Cantidad-de (rest lista) condicion)))
+        ( (not (and (funcall condicion (first lista)) t)) (+ 0 (Cantidad-de (rest lista) condicion)))
+    )
+)
+
+
+;para probarlo escribir en consola
+
+(cantidad-de '(1 4 2 3 4 6) 'mayortres)
