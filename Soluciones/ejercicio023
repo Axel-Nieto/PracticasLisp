@@ -11,7 +11,7 @@
 (defun sumatoria-de (lista condicion)
     (cond
         ((null lista) 0)
-        ((and (funcall condicion (first lista)) t) (+ (first lista) (Cantidad-de (rest lista) condicion)))
-        ( (not (and (funcall condicion (first lista)) t)) (+ 0 (Cantidad-de (rest lista) condicion)))
+        ((and (funcall condicion (first lista)) t) (+ (first lista) (sumatoria-de (rest lista) condicion)))
+        ( (not (and (funcall condicion (first lista)) t)) (+ 0 (sumatoria-de (rest lista) condicion)))
     )
 )
