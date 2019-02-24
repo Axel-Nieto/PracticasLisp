@@ -1,0 +1,11 @@
+;Devuelva la cantidad de números que contiene una lista
+;La gracia de este ejercicio es que ya no vamos a tener solamente numeros en la lista, por lo que vamos a usar la keyword 'numberp',
+;para asegurarnos de que estamos evaluando un numero
+
+(defun cantnumeros (lista)
+    (cond
+        ((null lista) 0)
+        ((numberp (first lista)) (+ 1 (cantnumeros (rest lista))))
+        ((not (numberp (first lista))) (+ 0 (cantnumeros (rest lista))))
+    )
+)
