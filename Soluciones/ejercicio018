@@ -1,0 +1,9 @@
+;Escriba una función que tome una lista y un elemento como argumentos, y devuelva la lista original con todas las ocurrencias de dicho elemento eliminadas
+
+(defun eliminarocurrencias (lista elemento)
+    (cond
+        ((null lista) nil)
+        ((= (first lista) elemento) (append (rest lista)) (eliminarocurrencias (rest lista) elemento))
+        ((/= (first lista) elemento) (cons (first lista) (eliminarocurrencias (rest lista) elemento)))
+    )
+)
