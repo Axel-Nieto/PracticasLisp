@@ -1,21 +1,9 @@
 ;9.	Elimine el i-ésimo elemento de una lista.
 
-;esta funcion tendra 3 condiciones:
-; -Si la lista es nula devolvera nil
-; -Si la posicion n es 0 quitara el primer elemento de la lista
-; -Si la posicion es mayor a 0, nos servira como un contador hacia atras, crearemos una lista
-;  con ese primer elemento que no debemos eliminar y el resto sera la lista resultante de aplicar
-;  eliminarn al resto de la lista actual y con el valor n decrementado.
-;  Cuando n llegue a 0 por recursividad, estaremos posicionados en el elemento a eliminat, aplicando asi el remove,
-;  mientras que el resto de la lista forma parte del eliminarn que conforma el cons anterior a la llamada
-;Nota: si n es un numero no valido, ya sea negativo o mas grande que la lista, devolvera nil. Primero porque no
-;podra ejecutar ninguna instruccion, no habra bucle y por lo tanto el resultado estara vacio. Segundo, porque en
-;algun punto al avanzar en la lista eliminarn tendra a evaluar una lista vacia, activando el (null lista)
-
 (defun eliminarn (lista n)
     (cond
         ((null lista) nil)
-        ((=  n 0) (remove (first lista) lista))
+        ((=  n 0) (append (rest lista)))
         ((> n 0) (cons (first lista) (eliminarn (rest lista) (- n 1))))
     )
 )
