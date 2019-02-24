@@ -1,0 +1,17 @@
+;Defina una función que devuelva la lista de elementos que cumplen con una determinada condición
+
+;Para una explicacion mas detallada consultar el ejercicio022
+
+(defun mayortres (elemento)
+    (cond
+        ((> elemento 3) t)
+    )
+)
+
+(defun lista-de (lista condicion)
+    (cond
+        ((null lista) nil)
+        ((and (funcall condicion (first lista)) t) (cons (first lista) (lista-de (rest lista) condicion)))
+        ( (not (and (funcall condicion (first lista)) t)) (lista-de (rest lista) condicion))
+    )
+)
