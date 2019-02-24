@@ -1,0 +1,10 @@
+;Escriba una función llamada "reemplazo", que tome una lista y dos elementos como argumentos,
+;y devuelva la lista original con todas las instancias del primer elemento reemplazadas por el segundo
+
+(defun reemplazo (lista e1 e2)
+    (cond
+        ((null lista) nil)
+        ((= (first lista) e1) (cons e2 (reemplazo (rest lista) e1 e2)))
+        ((/= (first lista) e1) (cons (first lista) (reemplazo (rest lista) e1 e2)))
+    )
+)
