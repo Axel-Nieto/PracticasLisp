@@ -1,0 +1,44 @@
+;Defina una función que tome una lista de números y devuelva una 3-upla formada por el promedio, el máximo y el mínimo de la lista
+
+(defun contar (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (+ 1 (contar (rest lista))))
+    )
+)
+
+(defun sumatoria (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (+ (first lista) (sumatoria (rest lista))))
+    )
+)
+
+(defun promedio (lista)
+    (/ (sumatoria lista) (contar lista))
+)
+
+(defun maximo (lista max)
+    (cond
+        ((null (rest lista)) max)
+        ((> (first lista) max) (maximo (rest lista) (first lista)))    
+        ((<= (first lista) max) (maximo (rest lista) max))
+    )
+)
+
+(defun minimo (lista min)
+    (cond
+        ((null (rest lista)) min)
+        ((< (first lista) min) (minimo (rest lista) (first lista)))  
+        ((>= (first lista) min) (minimo (rest lista) min))
+    )
+)
+
+(defun programa (lista)
+    (cond
+        (
+         (not (null lista)) 
+         (cons (promedio lista) (cons (maximo lista (first lista)) (cons (minimo lista (first lista)) nil)))
+        )
+    )
+)
