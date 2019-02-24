@@ -1,0 +1,17 @@
+;Defina una función que tome una lista de números y una condición (función) como parámetros y devuelva la sumatoria de los elementos que cumplen dicha condición.
+
+;Para una explicacion mas detallada consultar el ejercicio022
+
+(defun mayortres (elemento)
+    (cond
+        ((> elemento 3) t)
+    )
+)
+
+(defun sumatoria-de (lista condicion)
+    (cond
+        ((null lista) 0)
+        ((and (funcall condicion (first lista)) t) (+ (first lista) (Cantidad-de (rest lista) condicion)))
+        ( (not (and (funcall condicion (first lista)) t)) (+ 0 (Cantidad-de (rest lista) condicion)))
+    )
+)
