@@ -1,0 +1,105 @@
+;Considere que cada conjunto se representa mediante una lista. Defina funciones para simular: a. Unión de conjuntos b. Intersección de conjuntos c. Diferencia de conjuntos d. Diferencia simétrica de conjuntos
+
+;Nuestras armas en este caso seran las operaciones logicas and y or, la negacion not y una funcion 'existe' para verificar si el elemento se encuentra
+;en la lista. Tambien tenemos que evitar colocar elementos repetidos, por lo que tenemos que ver si ya agregamos el elemento 
+;al nuevo conjunto previamente, cosa que tambien podemos hacer con existe
+;Nota aca no vamos a crear una 
+
+(defun existe (lista elemento)
+    (cond
+        ((null lista) nil)
+        ((= elemento (first lista)) t)
+        ((/= elemento (first lista)) (existe (rest lista) elemento))
+    )
+)
+
+;a. Union de conjuntos
+;Una union de conjuntos es, dicho de manera rapida, juntar todos los elementos de un conjunto a y los de b en un conjunto c, sin repetir
+;NOTA: como la palabra union es una keyword en Lisp, vamos a poner una x delante de cada metodo.
+;Siguiendo con el ejercicio, vamos a tener nuestras dos listas, y mientras no este vacio la va evaluar en cada uno de sus elementos si tiene
+;otro similar en lb. si no lo tiene se lista, y si lo tiene llamaremos a xunion para el siguiente elemento de la.
+;Todos los elementos de la que no se agregaron por estar repetidos en lb, se listaran luego, pues introduciremos toda la lista lb
+
+(defun xunion (la lb)
+    (cond
+        ((and (null la) (null lb)) nil)
+        ((and (not (null la)) (existe lb (first la))) (xunion (rest la) lb))   
+        ((and (not (null la)) (not (existe lb (first la)))) (cons (first la) (xunion (rest la) lb)))        
+        ((not (null lb)) (cons (first lb) (rest lb)))
+    )
+)
+
+;b. Interseccion de conjuntos
+;Una interseccion es juntar en un conjunto c todos los elementos que formen parte tanto de a como de b
+;Para este ejercicio ya conviene tener a mano una funcion para eliminar elementos repetidos
+;En este caso resolverlo resulta mas sencillo, lo que tenemos que hacer es evaluar los elementos de la,
+;si existen en lb construimos la lista con la en primer lugar y el resto es llamar recursivamente a interseccion,
+;sino simplemente llamamos al siguiente elemento de la.
+;Terminados las dos funciones, escribimos la funcion xintersec, que es aplicar la eliminacion de elementos repetidos a
+;la lista resultante de intersecar la y lb
+
+(defun eliminrepe (lista aux)
+    (cond
+        ((null lista) aux)
+        ((existe aux (first lista)) (eliminrepe (rest lista) aux))
+        ((not (existe aux (first lista))) (eliminrepe (rest lista) (cons (first lista) aux)))
+    )
+)
+
+(defun interseccion (la lb)
+    (cond
+        ((or (null la) (null lb)) nil)
+        ((existe lb (first la)) (cons (first la) (interseccion (rest la) lb)))
+        ((not (existe lb (first la))) (interseccion (rest la) lb))
+    )
+)
+
+
+(defun xintersec (la lb)
+    (eliminrepe (interseccion la lb) '())
+)
+
+;c. Diferencia de conjuntos
+;Bien, aca la cosa se complica, no en termino de codigo, pero si en comprender el concepto, asi que voy a ser lo mas claro al escribir.
+;Una diferencia de conjuntos a-b es excluir de a todos los elementos en comunes que tenga con b, de esta forma queda solamente un conjunto a'
+;como resultado que puede ser igual o mas pequeño que el conjunto a original
+;   ej: A=(1,2,3,4,5,6) B=(4,5,6,7,8,9,0)
+;                                           C=A-B=(1,2,3)
+;                                           D=B-A=(7,8,9,0)
+;
+;A partir de este punto es solamente jugar con las expresiones logicas + la funcion existe. Compare la funcion diferencia con la funcion interseccion
+
+(defun diferencia (la lb)
+    (cond
+        ((or (null la) (null lb)) nil)
+        ((not (existe lb (first la))) (cons (first la) (diferencia (rest la) lb)))
+        ((existe lb (first la)) (diferencia (rest la) lb))
+    )
+)
+
+(defun xdif (la lb)
+    (eliminrepe (diferencia la lb) '())
+)
+
+;d. Diferencia simetrica de conjuntos
+;Para hacer este ultimo ejercicio vamos a jugar con lo que ya tenemos, pues la diferencia simetrica es el opuesto de la interseccion,
+;en lugar de devolver los elementos comunes entre a y b, devuelve aquellos que no lo son.
+;   ej: A=(1,2,3,4,5,6) B=(4,5,6,7,8,9,0)
+;                                           C=(1,2,3,7,8,9,0)
+;Para resolverlo vamos a hacer uso de las operaciones anteriores, ya que la diferencia simetrica es el resultado de quitarle la interseccion
+;a la union de a y b
+
+(defun xsymdif (la lb)
+    (eliminrepe (xdif (union la lb) (xintersec la lb)) '())
+)
+
+;Por ultimo y con el objetivo de observar resultados, el programa que imprime cada resultado
+;NOTA: el resultado xsymdif puede aparecer dos veces, esto es porque lisp devuelve las impresiones y el resultado final del programa,
+;en el ejecutable ocurre lo mismo con la diferencia de que el resultado no lo muestra porque no le ordenamos imprimir en pantalla
+
+(defun programa (la lb)
+    (print (xunion la lb))
+    (print (xintersec la lb))
+    (print (xdif la lb))
+    (print (xsymdif la lb))
+)
