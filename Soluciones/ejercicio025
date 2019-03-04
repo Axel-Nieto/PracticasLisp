@@ -1,0 +1,28 @@
+;Escriba una función llamada “Palíndromo” que indique si una lista es Palíndromo (capicúa).
+
+(defun cantidad (lista)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (+ 1 (cantidad (rest lista))))
+    )
+)
+
+(defun nelemento (lista n i)
+    (cond
+        ((null lista) nil)
+        ((= n i) (first lista))
+        ((/= n i) (nelemento (rest lista) n (+ i 1)))
+    )
+)
+
+(defun invertir (lista k n)
+    (cond
+       ((>= n k) (cons (nelemento lista n k) (invertir lista k (- n 1))))
+    )
+)
+
+(defun palindromo (lista)
+    (cond
+        ((equal lista (invertir lista 0 (- (cantidad lista) 1))) t)
+    )
+)
