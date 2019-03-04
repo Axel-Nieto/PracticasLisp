@@ -1,0 +1,18 @@
+;Defina una función que tome como entrada una lista de números entre el 1 y el 3, y devuelva un par ordenado con el número que mayor cantidad de veces aparece en la lista original y su frecuencia.
+
+(defun contar (lista elemento)
+    (cond
+        ((null lista) 0)
+        ((= (first lista) elemento) (+ 1 (contar (rest lista) elemento)))
+        ((/= (first lista) elemento) (contar (rest lista) elemento))
+    )
+)
+
+(defun tendencia (lista elemax max)
+    (cond
+        ((null lista) (cons elemax max))
+        ((or (< (first lista) 1) (> (first lista) 3)) nil)
+        ((and (> (contar lista (first lista)) max) (not (null lista))) (tendencia (rest lista) (first lista) (contar lista (first lista))))
+        ((and (<= (contar lista (first lista)) max) (not (null lista))) (tendencia (rest lista) elemax max))
+    )
+)
