@@ -1,0 +1,12 @@
+;Realice un programa que, dado un número N, calcule el mayor valor de la serie de Fibonacci que sea menor que N. La serie está dada por : 0, 1, 1, 2, 3, 5, 8, 13, ... ; donde los primeros números son 0 y 1, y los demás se calculan como la suma de los dos anteriores.
+
+(defun maxfibonacci (n0 n1 n2 max)
+    (cond
+        ((< (+ n1 n2) max) (maxfibonacci n1 n2 (+ n1 n2) max))
+        ((>= (+ n1 n2) max) (+ n0 n1))
+    )
+)
+
+(defun programa (n)
+    (max fibonacci 0 0 1 n)
+)
