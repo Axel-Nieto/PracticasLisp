@@ -1,0 +1,28 @@
+;Escriba una función que tome un número y una lista conteniendo los coeficientes de un polinomio y devuelva el resultado del mismo reemplazando el número por la variable: Ej. para (2 5 4 50 3) y 3 el polinomio en x es 2 + 5 x + 4 x2 + 50 x3 + 3 x4 , donde x=3
+
+(defun potencia (x n)
+    (cond
+        ((and (= x 0) (= n 0)) nil)
+        ((and (/= 0) (= n 0)) 1)
+        ((and (= x 0) (/= n 0)) 0)
+        ((and (/= x 0) (/= n 0)) (* x (potencia x (- n 1))))
+    )
+)
+
+(defun calculopolinomio (lista x pos)
+    (cond
+        ((null lista) 0)
+        ((not (null lista)) (+ (* (first lista) (potencia x pos)) (calculopolinomio (rest lista) x (+ 1 pos))))
+    )
+)
+
+(defun polinomio (lista x)
+    (calculopolinomio lista x 0)
+)
+
+
+;Ejemplo
+;Polinomio ---> 2 x0 + 5 x + 4 x2 + 50 x3 + 3 x4
+;X--->3
+
+;Resultado---> 2*1 + 5*3 + 4*9 + 50*27 + 3*81 = 1646 COMPROBAR CON EL PROGRAMA. 
